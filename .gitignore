@@ -1,3 +1,4 @@
 /test/tiles
 /tmp
-**/*.pyc
+*.pyc
+*.egg-info
