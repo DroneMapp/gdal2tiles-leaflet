@@ -2947,19 +2947,19 @@ gdal2tiles temp.vrt"""
 # =============================================================================
 
 def worker_metadata(argv):
-    gdal2tiles = GDAL2Tiles(argv[1:])
+    gdal2tiles = GDAL2Tiles(argv)
     gdal2tiles.open_input()
     gdal2tiles.generate_metadata()
 
 
 def worker_base_tiles(argv, cpu):
-    gdal2tiles = GDAL2Tiles(argv[1:])
+    gdal2tiles = GDAL2Tiles(argv)
     gdal2tiles.open_input()
     gdal2tiles.generate_base_tiles(cpu)
 
 
 def worker_overview_tiles(argv, cpu, tz):
-    gdal2tiles = GDAL2Tiles(argv[1:])
+    gdal2tiles = GDAL2Tiles(argv)
     gdal2tiles.open_input()
     gdal2tiles.generate_overview_tiles(cpu, tz)
 
@@ -2967,7 +2967,7 @@ def worker_overview_tiles(argv, cpu, tz):
 def main(*args, **kwargs):
     argv = gdal.GeneralCmdLineProcessor(args)
     if argv:
-        gdal2tiles = GDAL2Tiles(argv[1:])  # handle command line options
+        gdal2tiles = GDAL2Tiles(argv)  # handle command line options
 
         p = multiprocessing.Process(target=worker_metadata, args=[argv])
         p.start()
@@ -3000,15 +3000,15 @@ def main(*args, **kwargs):
                 try:
                     total = queue.get(timeout=1)
                     processed_tiles += 1
-                    gdal.TermProgress_nocb(processed_tiles
-                            / float(total))
+                    gdal.TermProgress_nocb(processed_tiles / float(total))
                     sys.stdout.flush()
                 except:
                     pass
             pool.join()
 
+
 if __name__ == '__main__':
-    main(*sys.argv)
+    main(*sys.argv[1:])
 
 #############
 # vim:noet
