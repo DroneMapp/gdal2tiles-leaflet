@@ -2991,7 +2991,7 @@ def main(*args, **kwargs):
 
         processed_tiles = 0
         print('Generating Overview Tiles:')
-        minz = gdal2tiles.tminz or 5
+        minz = gdal2tiles.tminz or 0
         maxz = gdal2tiles.tmaxz or 23
         for tz in range(maxz - 1, minz - 1, -1):
             pool = multiprocessing.Pool()
