@@ -2991,7 +2991,9 @@ def main(*args, **kwargs):
 
         processed_tiles = 0
         print('Generating Overview Tiles:')
-        for tz in range(gdal2tiles.tmaxz - 1, gdal2tiles.tminz - 1, -1):
+        minz = gdal2tiles.tminz or 5
+        maxz = gdal2tiles.tmaxz or 23
+        for tz in range(maxz - 1, minz - 1, -1):
             pool = multiprocessing.Pool()
             for cpu in range(gdal2tiles.options.processes):
                 pool.apply_async(worker_overview_tiles, [argv, cpu, tz])
